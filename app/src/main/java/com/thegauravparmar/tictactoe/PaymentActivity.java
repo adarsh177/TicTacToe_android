@@ -21,6 +21,8 @@ import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.ConsumeParams;
+import com.android.billingclient.api.ConsumeResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
@@ -110,6 +112,16 @@ public class PaymentActivity extends AppCompatActivity {
                             /*TODO
                                SAVE PURCHASE ON SERVER
                                */
+                            for(Purchase purchase : list){
+                                // yaha check kar purchase ka type or user ko assign karde award or fir jab wo complete ho jaye tab hi consumeAsync karna
+                                client.consumeAsync(ConsumeParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken()).build(), new ConsumeResponseListener() {
+                                    @Override
+                                    public void onConsumeResponse(@NonNull BillingResult billingResult, @NonNull String s) {
+                                        //
+                                    }
+                                });
+                            }
+
                         }
                     }
                 }).build();
